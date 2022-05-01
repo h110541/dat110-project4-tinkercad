@@ -1,5 +1,7 @@
 void setup() {
-    pinMode(2, INPUT); // sensor
+    Serial.begin(9600);
+
+    pinMode(2, INPUT); // motion sensor
     pinMode(6, INPUT); // button2
     pinMode(7, INPUT); // button1
 
@@ -18,4 +20,17 @@ const int UNLOCKED = 4;
 int state = LOCKED;
 
 void loop() {
+    int button1 = digitalRead(7);
+    int button2 = digitalRead(6);
+
+    switch (state) {
+        case LOCKED:
+            break;
+        case WAITING1:
+            break;
+        case WAITING2:
+            break;
+        case UNLOCKED:
+            break;
+    }
 }
