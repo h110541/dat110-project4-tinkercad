@@ -21,8 +21,7 @@ const int UNLOCKED = 4;
 
 int state = LOCKED;
 
-int push_handled1 = 0;
-int push_handled2 = 0;
+int push_handled = 0;
 
 const int VALUE1_CORRECT = 2;
 const int VALUE2_CORRECT = 1;
@@ -36,12 +35,8 @@ void loop() {
     int button1 = digitalRead(7);
     int button2 = digitalRead(6);
 
-    if (button1 == LOW) {
-        push_handled1 = 0;
-    }
-
-    if (button2 == LOW) {
-        push_handled2 = 0;
+    if (button1 == LOW && button2 == LOW) {
+        push_handled = 0;
     }
 
     switch (state) {
@@ -53,25 +48,25 @@ void loop() {
             }
             break;
         case WAITING1:
-            if (button1 == HIGH && !push_handled1) {
-                push_handled1 = 1;
+            if (button1 == HIGH && !push_handled) {
+                push_handled = 1;
                 value1_entered = 1;
                 blink(12);
                 state = WAITING2;
-            } else if (button2 == HIGH && !push_handled2) {
-                push_handled2 = 1;
+            } else if (button2 == HIGH && !push_handled) {
+                push_handled = 1;
                 value1_entered = 2;
                 blink(12);
                 state = WAITING2;
             }
             break;
         case WAITING2:
-            if (button1 == HIGH && !push_handled1) {
-                push_handled1 = 1;
+            if (button1 == HIGH && !push_handled) {
+                push_handled = 1;
                 value2_entered = 1;
                 blink(12);
-            } else if (button2 == HIGH && !push_handled2) {
-                push_handled2 = 1;
+            } else if (button2 == HIGH && !push_handled) {
+                push_handled = 1;
                 value2_entered = 2;
                 blink(12);
             }
