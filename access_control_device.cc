@@ -12,7 +12,6 @@ void setup() {
     digitalWrite(11, HIGH);
 }
 
-
 // states
 const int LOCKED = 1;
 const int WAITING1 = 2;
@@ -57,7 +56,7 @@ void loop() {
             }
 
             if (value1_entered) {
-                blink(12);
+                blink(12, 1);
                 state = WAITING2;
             }
             break;
@@ -65,21 +64,22 @@ void loop() {
             if (button1 == HIGH && !push_handled) {
                 push_handled = 1;
                 value2_entered = 1;
-                blink(12);
             } else if (button2 == HIGH && !push_handled) {
                 push_handled = 1;
                 value2_entered = 2;
-                blink(12);
             }
 
             if (value2_entered) {
+                blink(12, 1);
+
                 if (value1_entered == VALUE1_CORRECT && value2_entered == VALUE2_CORRECT) {
                     digitalWrite(12, LOW);
                     digitalWrite(13, HIGH);
                     state = UNLOCKED;
                 } else {
                     digitalWrite(12, LOW);
-                    blink(11);
+                    blink(11, 0);
+                    digitalWrite(11, HIGH);
                     state = LOCKED;
                 }
 
@@ -95,11 +95,13 @@ void loop() {
     }
 }
 
-void blink(int led_id) {
-    for (int i = 0; i < 4; i++) {
-        digitalWrite(led_id, LOW);
-        delay(200);
-        digitalWrite(led_id, HIGH);
+// parameter original_state: 1 if the LED is on, 0 if it is off
+void blink(int led_id, int original_state) {
+    int led_state = original_state;
+
+    for (int i = 0; i < 8; i++) {
+        led_state = !led_state;
+        digitalWrite(led_id, led_state ? HIGH : LOW);
         delay(200);
     }
 }
