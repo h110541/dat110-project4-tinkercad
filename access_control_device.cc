@@ -24,10 +24,12 @@ int state = LOCKED;
 int push_handled1 = 0;
 int push_handled2 = 0;
 
-int value1_correct = 2;
-int value2_correct = 1;
+const int VALUE1_CORRECT = 2;
+const int VALUE2_CORRECT = 1;
 int value1_entered = 0;
 int value2_entered = 0;
+
+const int TIMEOUT_SECONDS = 10;
 
 void loop() {
     int motion_sensor = digitalRead(2);
@@ -75,7 +77,7 @@ void loop() {
             }
 
             if (value2_entered) {
-                if (value1_entered == value1_correct && value2_entered == value2_correct) {
+                if (value1_entered == VALUE1_CORRECT && value2_entered == VALUE2_CORRECT) {
                     digitalWrite(12, LOW);
                     digitalWrite(13, HIGH);
                     state = UNLOCKED;
@@ -89,6 +91,10 @@ void loop() {
             }
             break;
         case UNLOCKED:
+            delay(TIMEOUT_SECONDS * 1000);
+            digitalWrite(13, LOW);
+            digitalWrite(11, HIGH);
+            state = LOCKED;
             break;
     }
 }
