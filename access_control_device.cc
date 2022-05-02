@@ -82,12 +82,12 @@ void loop() {
                     digitalWrite(13, HIGH);
                     state = UNLOCKED;
                 } else {
-                    value1_entered = 0;
-                    value2_entered = 0;
                     digitalWrite(12, LOW);
                     blink(11);
                     state = LOCKED;
                 }
+
+                reset_entered_values();
             }
             break;
         case UNLOCKED:
@@ -106,4 +106,9 @@ void blink(int led_id) {
         digitalWrite(led_id, HIGH);
         delay(200);
     }
+}
+
+void reset_entered_values() {
+    value1_entered = 0;
+    value2_entered = 0;
 }
