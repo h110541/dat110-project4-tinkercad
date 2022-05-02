@@ -51,11 +51,12 @@ void loop() {
             if (button1 == HIGH && !push_handled) {
                 push_handled = 1;
                 value1_entered = 1;
-                blink(12);
-                state = WAITING2;
             } else if (button2 == HIGH && !push_handled) {
                 push_handled = 1;
                 value1_entered = 2;
+            }
+
+            if (value1_entered) {
                 blink(12);
                 state = WAITING2;
             }
